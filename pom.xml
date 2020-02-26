@@ -13,6 +13,7 @@
         <module>health_dao</module>
         <module>health_interface</module>
         <module>health_service</module>
+        <module>health_web</module>
     </modules>
 
     <packaging>pom</packaging>
