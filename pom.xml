@@ -12,6 +12,7 @@
         <module>health_pojo</module>
         <module>health_dao</module>
         <module>health_interface</module>
+        <module>health_service</module>
     </modules>
 
     <packaging>pom</packaging>
