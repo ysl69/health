@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>health_common</module>
+        <module>health_pojo</module>
     </modules>
 
     <packaging>pom</packaging>
