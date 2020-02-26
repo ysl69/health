@@ -1,4 +1,7 @@
-####一、需求分析
+#传智健康
+
+
+###一、需求分析
 
 传智健康管理系统是一款应用于健康管理机构的业务系统，实现健康管理机构工作内容可视化、患者管理专业化、健康评估数字化、健康干预流程化、知识库集成化，从而提高健康管理师的工作效率，加强与患者间的互动，增强管理者对健康管理机构运营情况的了解。
 
@@ -8,22 +11,22 @@
 
 
 
-####二、项目结构
+###二、项目结构
 
 本项目采用maven分模块开发方式，即对整个项目拆分为几个maven工程。
 
 各模块职责定位：
 
-**health_parent：**父工程，打包方式为pom，统一锁定依赖的版本，同时聚合其他子模块便于统一执行maven命令
+health_parent：父工程，打包方式为pom，统一锁定依赖的版本，同时聚合其他子模块便于统一执行maven命令
 
-**health_common：**通用模块，打包方式为jar，存放项目中使用到的一些工具类和常量类
+health_common：通用模块，打包方式为jar，存放项目中使用到的一些工具类和常量类
 
-**health_pojo：**打包方式为jar，存放实体类和返回结果类等
+health_pojo：打包方式为jar，存放实体类和返回结果类等
 
-**health_dao：**持久层模块，打包方式为jar，存放Dao接口和Mapper映射文件等
+health_dao：持久层模块，打包方式为jar，存放Dao接口和Mapper映射文件
 
-**health_interface：**打包方式为jar，存放服务接口
+health_interface：打包方式为jar，存放服务接
 
-**health_service：**Dubbo服务模块，打包方式为war，存放服务实现类，作为服务提供方，需要部署到tomcat运行
+health_service：Dubbo服务模块，打包方式为war，存放服务实现类，作为服务提供方，需要部署到tomcat运
 
-**health_web：**打包方式为war，作为Dubbo服务消费方，存放Controller、HTML页面、js、css、spring配置文件等，需要部署到tomcat运行
+health_web：打包方式为war，作为Dubbo服务消费方，存放Controller、HTML页面、js、css、spring配置文件等，需要部署到tomcat运行
