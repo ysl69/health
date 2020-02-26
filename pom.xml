@@ -17,7 +17,7 @@
     <!-- 集中定义依赖版本号 -->
     <properties>
         <junit.version>4.12</junit.version>
-        <spring.version>5.0.5.RELEASE</spring.version>
+        <spring.version>5.2.4.RELEASE</spring.version>
         <pagehelper.version>4.1.4</pagehelper.version>
         <servlet-api.version>2.5</servlet-api.version>
         <dubbo.version>2.6.0</dubbo.version>
