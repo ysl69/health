@@ -14,6 +14,8 @@
         <module>health_interface</module>
         <module>health_service</module>
         <module>health_web</module>
+        <module>dubbo_provider</module>
+        <module>dubbo_consumer</module>
     </modules>
 
     <packaging>pom</packaging>
