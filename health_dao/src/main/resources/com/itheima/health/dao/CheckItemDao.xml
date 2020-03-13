@@ -8,4 +8,13 @@
         values
         (#{code},#{name},#{sex},#{age},#{price},#{type},#{remark},#{attention})
     </insert>
+
+
+    <!--分页 条件查询-->
+    <select id="selectByCondition" parameterType="string" resultType="com.itheima.health.pojo.CheckItem">
+        SELECT * FROM t_checkitem
+        <if test="value != null and value.length>0">
+            WHERE code = #{value} or name = #{value}
+        </if>
+    </select>
 </mapper>

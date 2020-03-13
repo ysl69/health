@@ -1,6 +1,7 @@
 package com.itheima.health.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.itheima.health.entity.PageResult;
 import com.itheima.health.pojo.CheckItem;
 
 /**
@@ -17,4 +18,13 @@ public interface CheckItemService {
      */
     void add(CheckItem checkItem);
 
+
+    /**
+     * 分页
+     * @param currentPage
+     * @param pageSize
+     * @param queryString
+     * @return
+     */
+    PageResult pageQuery(Integer currentPage, Integer pageSize, String queryString);
 }
