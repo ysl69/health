@@ -232,15 +232,43 @@
                 },
                 //添加
                 handleAdd () {
-                },
+                      //校验表单输入项是否合法
+                    this.$refs['dataAddForm'].validate((valid)=>{
+                        if (valid){
+                            //表单数据校验通过，发送ajax请求将表单数据提交到后台
+                            axios.post("/checkitem/add.do",this.formData).then((response)=>{
+                                //隐藏新增窗口
+                                this.dialogFormVisible = false;
+                                //判断后台返回的flag值，true表示添加操作成功，false为添加操作失败
+                                if (response.data.flag){
+                                    this.$message({
+                                        message: response.data.message,
+                                        type: 'success'
+                                    });
+                                } else {
+                                    this.$message.error(response.data.message);
+                                }
+                            }).finally(()=>{
+                                //this.findPage();
+                            });
+
+                            }else{
+                                this.$message.error("表单数据校验");
+                                return false;
+                            }
+                    })
+                                    },
                 //分页查询
                 findPage() {
                 },
                 // 重置表单
                 resetForm() {
+                    this.resetData= {};
                 },
                 // 弹出添加窗口
                 handleCreate() {
+                    this.resetForm();
+                    this.dialogFormVisible = true;
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {

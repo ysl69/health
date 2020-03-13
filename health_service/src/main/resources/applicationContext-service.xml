@@ -17,7 +17,7 @@
     <!--指定暴露服务的端口，如果不指定默认为20880-->
     <dubbo:protocol name="dubbo" port="20887"/>
     <!--指定服务注册中心地址-->
-    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+    <dubbo:registry address="zookeeper://192.168.25.145:2181"/>
     <!--批量扫描，发布服务-->
     <dubbo:annotation package="com.itheima.health.service"/>
 </beans>
