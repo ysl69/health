@@ -9,6 +9,11 @@
         (#{code},#{name},#{sex},#{age},#{price},#{type},#{remark},#{attention})
     </insert>
 
+    <!--删除-->
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM t_checkitem WHERE id = #{id}
+    </delete>
+
 
     <!--分页 条件查询-->
     <select id="selectByCondition" parameterType="string" resultType="com.itheima.health.pojo.CheckItem">
@@ -16,5 +21,10 @@
         <if test="value != null and value.length>0">
             WHERE code = #{value} or name = #{value}
         </if>
+    </select>
+
+    <!--根据检查项id查询中间关系表-->
+    <select id="findCountCheckItemId" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM t_checkgroup_checkitem WHERE checkitem_id = #{checkitem_id}
     </select>
 </mapper>

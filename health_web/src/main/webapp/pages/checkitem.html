@@ -294,6 +294,27 @@
                 },
                 // 删除
                 handleDelete(row) {
+                    //alert(row.id);
+
+                    this.$confirm("确认删除当前选中记录吗？","提示",{type:'warning'}).then(()=>{
+                        //点击确定按钮只需此处代码
+                        //alert("用户点击的是确定按钮");
+
+                        axios.get("/checkitem/delete.do?id="+row.id).then((res)=>{
+                            if (res.data.flag){
+                                //删除成功
+                                this.$message({
+                                    message: res.data.message,
+                                    typr: 'success'
+                                });
+                                //调用分页，获取最新分页数据
+                                this.findPage();
+                            }else {
+                                //删除失败
+                                this.$message.error(res.data.message);
+                            }
+                        })
+                    })
                 }
             }
         })
