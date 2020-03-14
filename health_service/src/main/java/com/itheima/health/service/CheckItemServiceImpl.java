@@ -61,4 +61,26 @@ public class CheckItemServiceImpl implements CheckItemService{
         }
         checkItemDao.deleteById(id);
     }
+
+
+    /**
+     * 跳转到检查项编辑页面  主键查询
+     * @param id
+     * @return
+     */
+    @Override
+    public CheckItem findById(Integer id) {
+        CheckItem checkItem = checkItemDao.findCheckItemId(id);
+        return checkItem;
+    }
+
+
+    /**
+     * 编辑保存
+     * @param checkItem
+     */
+    @Override
+    public void edit(CheckItem checkItem) {
+        checkItemDao.edit(checkItem);
+    }
 }

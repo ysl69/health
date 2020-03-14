@@ -42,4 +42,19 @@ public interface CheckItemDao {
      * @param id
      */
     void deleteById(Integer id);
+
+
+    /**
+     * 主键查询
+     * @param id
+     * @return
+     */
+    CheckItem findCheckItemId(Integer id);
+
+
+    /**
+     * 编辑保存
+     * @param checkItem
+     */
+    void edit(CheckItem checkItem);
 }

@@ -9,6 +9,39 @@
         (#{code},#{name},#{sex},#{age},#{price},#{type},#{remark},#{attention})
     </insert>
 
+
+    <!--编辑-->
+    <update id="edit" parameterType="com.itheima.health.pojo.CheckItem">
+        UPDATE t_checkitem
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="attention != null">
+                attention = #{attention},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+       where id = #{id}
+    </update>
+
     <!--删除-->
     <delete id="deleteById" parameterType="int">
         DELETE FROM t_checkitem WHERE id = #{id}
@@ -24,7 +57,14 @@
     </select>
 
     <!--根据检查项id查询中间关系表-->
-    <select id="findCountCheckItemId" resultType="java.lang.Long">
+    <select id="findCountCheckItemId" resultType="java.lang.Long" parameterType="int">
         SELECT COUNT(*) FROM t_checkgroup_checkitem WHERE checkitem_id = #{checkitem_id}
+    </select>
+
+
+
+    <!--根据检查项id查询检查项信息-->
+    <select id="findCheckItemId" resultType="com.itheima.health.pojo.CheckItem" parameterType="int">
+        SELECT * FROM t_checkitem WHERE id = #{id}
     </select>
 </mapper>
