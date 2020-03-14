@@ -250,7 +250,8 @@
                                     this.$message.error(response.data.message);
                                 }
                             }).finally(()=>{
-                                //this.findPage();
+                                //调用分页，获取最新分页数据
+                                this.findPage();
                             });
 
                             }else{
