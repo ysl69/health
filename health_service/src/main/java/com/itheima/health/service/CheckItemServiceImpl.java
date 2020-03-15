@@ -9,6 +9,8 @@ import com.itheima.health.pojo.CheckItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @Author ysl
  * @Date 2020/3/11 21:27
@@ -82,5 +84,15 @@ public class CheckItemServiceImpl implements CheckItemService{
     @Override
     public void edit(CheckItem checkItem) {
         checkItemDao.edit(checkItem);
+    }
+
+
+    /**
+     * 查询所有
+     * @return
+     */
+    @Override
+    public List<CheckItem> findAll() {
+        return checkItemDao.findAll();
     }
 }

@@ -67,4 +67,11 @@
     <select id="findCheckItemId" resultType="com.itheima.health.pojo.CheckItem" parameterType="int">
         SELECT * FROM t_checkitem WHERE id = #{id}
     </select>
+
+
+
+    <!--查询所有-->
+    <select id="findAll" resultType="com.itheima.health.pojo.CheckItem">
+        SELECT * FROM t_checkitem
+    </select>
 </mapper>

@@ -4,6 +4,8 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.pojo.CheckItem;
 
+import java.util.List;
+
 /**
  * @Author ysl
  * @Date 2020/3/11 21:25
@@ -49,5 +51,12 @@ public interface CheckItemService {
      * @param checkItem
      */
     void edit(CheckItem checkItem);
+
+
+    /**
+     * 查询所有
+     * @return
+     */
+    List<CheckItem> findAll();
 
 }

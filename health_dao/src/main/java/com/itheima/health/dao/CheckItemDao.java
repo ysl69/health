@@ -4,6 +4,8 @@ import com.github.pagehelper.Page;
 import com.itheima.health.pojo.CheckItem;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @Author ysl
  * @Date 2020/3/11 21:29
@@ -57,4 +59,12 @@ public interface CheckItemDao {
      * @param checkItem
      */
     void edit(CheckItem checkItem);
+
+
+    /**
+     * 查询所有
+     * @return
+     */
+    List<CheckItem> findAll();
+
 }

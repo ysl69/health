@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.awt.*;
+import java.util.List;
+
 /**
  * @Author ysl
  * @Date 2020/3/11 21:21
@@ -104,4 +107,21 @@ public class CheckItemController {
         }
         return new Result(true,MessageConstant.EDIT_CHECKITEM_SUCCESS);
     }
+
+
+    /**
+     * 查询所有
+     * @return
+     */
+    @RequestMapping("/findAll")
+    public Result findAll(){
+       List<CheckItem> checkItemList = checkItemService.findAll();
+        if (checkItemList != null && checkItemList.size() > 0){
+            Result result = new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, checkItemList);
+            return result;
+        }
+        return new Result(false,MessageConstant.QUERY_CHECKITEM_FAIL);
+    }
+
+
 }
