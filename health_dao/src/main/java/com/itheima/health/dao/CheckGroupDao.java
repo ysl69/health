@@ -1,6 +1,8 @@
 package com.itheima.health.dao;
 
+import com.github.pagehelper.Page;
 import com.itheima.health.pojo.CheckGroup;
+import com.itheima.health.pojo.CheckItem;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
@@ -26,4 +28,13 @@ public interface CheckGroupDao {
      * @param map
      */
     void setCheckGroupAndCheckItem(Map<String, Integer> map);
+
+
+    /**
+     * 分页查询
+     * @param queryString
+     * @return
+     */
+    Page<CheckItem> selectByCondition(String queryString);
+
 }

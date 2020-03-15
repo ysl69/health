@@ -1,8 +1,12 @@
 package com.itheima.health.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.itheima.health.dao.CheckGroupDao;
+import com.itheima.health.entity.PageResult;
 import com.itheima.health.pojo.CheckGroup;
+import com.itheima.health.pojo.CheckItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +37,21 @@ public class CheckGroupServiceImpl implements CheckGroupService{
     public void add(CheckGroup checkGroup, Integer[] checkitemIds) {
         checkGroupDao.add(checkGroup);
         setCheckGroupAndCheckItem(checkGroup.getId(),checkitemIds);
+    }
+
+
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param queryString
+     * @return
+     */
+    @Override
+    public PageResult pageQuery(Integer currentPage, Integer pageSize, String queryString) {
+        PageHelper.startPage(currentPage,pageSize);
+        Page<CheckItem> page = checkGroupDao.selectByCondition(queryString);
+        return new PageResult(page.getTotal(),page.getResult());
     }
 
 

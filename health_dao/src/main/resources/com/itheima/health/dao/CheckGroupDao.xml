@@ -17,4 +17,13 @@
         values
         (#{checkgroup_id},#{checkitem_id})
     </insert>
+
+
+    <!--分页查询-->
+    <select id="selectByCondition" resultType="com.itheima.health.pojo.CheckItem">
+        SELECT * FROM t_checkgroup
+        <if test="value != null and value.length > 0">
+            WHERE code = #{value} or name = #{value} or helpCode = #{value}
+        </if>
+    </select>
 </mapper>

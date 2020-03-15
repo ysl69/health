@@ -264,12 +264,12 @@
             data:{
                 activeName:'first',//添加/编辑窗口Tab标签名称
                 pagination: {//分页相关属性
-                    currentPage: 1,
-                    pageSize:10,
-                    total:100,
-                    queryString:null,
+                    currentPage: 1, //当前页码
+                    pageSize:10,  //每页显示的记录数
+                    total:100, //总记录数
+                    queryString:null, //查询条件
                 },
-                dataList: [],//列表数据
+                dataList: [],//列表数据 当前页要展示的分页列表数据
                 formData: {},//表单数据
                 tableData:[],//新增和编辑表单中对应的检查项列表数据
                 checkitemIds:[],//新增和编辑表单中检查项对应的复选框，基于双向绑定可以进行回显和数据提交
@@ -305,6 +305,18 @@
                 },
                 //分页查询
                 findPage() {
+                    //分页参数
+                    var param = {
+                        currentPage: this.pagination.currentPage,//页码
+                        pageSize: this.pagination.pageSize,//每页显示的记录数
+                        queryString: this.pagination.queryString // 查询条件
+                    }
+                    //请求后台
+                    axios.post("/checkgroup/findPage.do",param).then((response)=>{
+                        //为模型数据赋值，基于VUE的双向绑定展示到页面
+                        this.dataList = response.data.rows;
+                        this.pagination.total = response.data.total;
+                    })
                 },
                 // 重置表单
                 resetForm() {
@@ -333,6 +345,9 @@
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
+                    //currentPage为切换后的页码
+                    this.pagination.currentPage = currentPage;
+                    this.findPage();
                 },
                 // 删除
                 handleDelete(row) {

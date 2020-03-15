@@ -1,5 +1,6 @@
 package com.itheima.health.service;
 
+import com.itheima.health.entity.PageResult;
 import com.itheima.health.pojo.CheckGroup;
 
 /**
@@ -15,4 +16,14 @@ public interface CheckGroupService {
      * @param checkitemIds
      */
     void add(CheckGroup checkGroup, Integer[] checkitemIds);
+
+
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param queryString
+     * @return
+     */
+    PageResult pageQuery(Integer currentPage, Integer pageSize, String queryString);
 }
