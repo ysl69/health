@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @Author ysl
  * @Date 2020/3/15 19:54
@@ -58,4 +60,50 @@ public class CheckGroupController {
         );
         return pageResult;
     }
+
+
+    /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findById")
+    public Result findById(Integer id){
+        CheckGroup checkGroup = checkGroupService.findById(id);
+        if (checkGroup != null){
+            Result result = new Result(true,MessageConstant.QUERY_CHECKGROUP_SUCCESS,checkGroup);
+            return result;
+        }
+        return new Result(false,MessageConstant.QUERY_CHECKGROUP_FAIL);
+    }
+
+
+    /**
+     * 根据检查组合id查询对应的所有检查项id
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findCheckItemByCheckGroupId")
+    public List<Integer> findCheckItemByCheckGroupId(Integer id){
+        List<Integer> list = checkGroupService.findCheckItemByCheckGroupId(id);
+        return list;
+    }
+
+
+    /**
+     * 编辑
+     * @param checkGroup
+     * @param checkitemIds
+     * @return
+     */
+    @RequestMapping("/edit")
+    public Result edit(@RequestBody CheckGroup checkGroup,Integer[] checkitemIds){
+        try {
+            checkGroupService.edit(checkGroup,checkitemIds);
+        } catch (Exception e) {
+            return new Result(false,MessageConstant.EDIT_CHECKGROUP_FAIL);
+        }
+        return new Result(true,MessageConstant.EDIT_CHECKGROUP_SUCCESS);
+    }
+
 }

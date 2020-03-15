@@ -282,6 +282,21 @@
             methods: {
                 //编辑
                 handleEdit() {
+                    //发送ajax请求，提交模型数据
+                    axios.post("/checkgroup/edit.do?checkitemIds="+this.checkitemIds,this.formData).then((response)=>{
+                        //隐藏编辑窗口
+                        this.dialogFormVisible4Edit = false;
+                        if (response.data.flag){
+                            this.$message({
+                                message: response.data.message,
+                                type: 'success'
+                            });
+                        } else {
+                            this.$message.error(response.data.message);
+                        }
+                    }).finally(()=>{
+                        this.findPage();
+                    })
                 },
                 //添加
                 handleAdd () {
@@ -342,6 +357,34 @@
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
+                    //alert(roe.id);
+                    //发送ajax请求发送数据 根据id查询检查组信息，用于基本信息回显
+                    axios.get("/checkgroup/findById.do?id="+row.id).then((res)=>{
+                        if (res.data.flag){
+                            //弹出编辑窗口
+                            this.dialogFormVisible4Edit = true;
+                            //默认选中第一个标签页
+                            this.activeName = 'first';
+                            //为模型数据赋值，通过VUE数据双向绑定进行信息的回显
+                            this.formData = res.data.data;
+                            //发送ajax请求查询所有的检查项信息，用于检查项表格展示
+                            axios.get("/checkitem/findAll.do").then((res)=>{
+                                if (res.data.flag){
+                                    //为模型数据赋值，通过VUE数据双向绑定进行信息的回显
+                                    this.tableData  = res.data.data;
+                                    //查询当前检查组包含的所有检查项id，用于页面回显
+                                    axios.get("/checkgroup/findCheckItemIdByCheckGroupId.do?id="+row.id).then((res)=>{
+                                        //为模型数据赋值，通过VUE数据双向绑定进行信息的回显
+                                        this.checkitemIds = res.data;
+                                    });
+                                }else {
+                                    this.$message.error(res.data.message);
+                                }
+                            });
+                        }else {
+                            this.$message.error("获取数据失败，请刷新当前页面");
+                        }
+                    })
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
