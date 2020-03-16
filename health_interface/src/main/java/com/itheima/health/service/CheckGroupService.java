@@ -52,4 +52,6 @@ public interface CheckGroupService {
      * @param checkitemIds
      */
     void edit(CheckGroup checkGroup, Integer[] checkitemIds);
+
+
 }

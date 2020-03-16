@@ -48,10 +48,12 @@
     </update>
 
 
+
     <!--根据检查组id删除中间表数据（清理原有关联关系）-->
     <delete id="deleteAssociation" parameterType="int">
         DELETE FROM t_checkgroup_checkitem WHERE checkgroup_id = #{id}
     </delete>
+
 
 
     <!--分页查询-->
