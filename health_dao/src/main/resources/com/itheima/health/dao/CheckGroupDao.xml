@@ -76,4 +76,11 @@
     <select id="findCheckItemByCheckGroupId" resultType="java.lang.Integer" parameterType="int">
         SELECT checkitem_id FROM t_checkgroup_checkitem WHERE  checkgroup_id = #{id}
     </select>
+
+
+
+    <!--查询所有-->
+    <select id="findAll" resultType="com.itheima.health.pojo.CheckGroup">
+        SELECT  * FROM  t_checkgroup
+    </select>
 </mapper>

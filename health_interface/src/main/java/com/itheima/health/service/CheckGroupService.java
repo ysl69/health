@@ -54,4 +54,10 @@ public interface CheckGroupService {
     void edit(CheckGroup checkGroup, Integer[] checkitemIds);
 
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<CheckGroup> findAll();
+
 }

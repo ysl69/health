@@ -69,4 +69,10 @@ public interface CheckGroupDao {
     List<Integer> findCheckItemByCheckGroupId(Integer id);
 
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<CheckGroup> findAll();
+
 }
