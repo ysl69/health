@@ -1,10 +1,12 @@
 package com.itheima.health.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.itheima.health.constant.RedisConstant;
 import com.itheima.health.dao.SetmealDao;
 import com.itheima.health.pojo.Setmeal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +25,9 @@ public class SetmealServiceImpl implements SetmealService{
     @Autowired
     private SetmealDao setmealDao;
 
+    @Autowired
+    private JedisPool jedisPool;
+
 
     /**
      * 新增
@@ -36,6 +41,18 @@ public class SetmealServiceImpl implements SetmealService{
             //绑定套餐和检查组的多对多关系
             setSetmealAndCheckGroup(setmeal.getId(),checkgroupIds);
         }
+
+        //将图片名称保存到Redis
+        savePic2Redis(setmeal.getImg());
+    }
+
+
+    /**
+     * 将图片名称保存到Redis
+     * @param img
+     */
+    private void savePic2Redis(String img) {
+        jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES,img);
     }
 
 
