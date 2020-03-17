@@ -17,6 +17,7 @@
         <module>dubbo_provider</module>
         <module>dubbo_consumer</module>
         <module>quartz_demo</module>
+        <module>health_jobs</module>
     </modules>
 
     <packaging>pom</packaging>
