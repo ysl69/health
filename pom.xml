@@ -16,6 +16,7 @@
         <module>health_web</module>
         <module>dubbo_provider</module>
         <module>dubbo_consumer</module>
+        <module>quartz_demo</module>
     </modules>
 
     <packaging>pom</packaging>
