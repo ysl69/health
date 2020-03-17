@@ -3,6 +3,8 @@ package com.itheima.health.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.health.constant.MessageConstant;
 import com.itheima.health.constant.RedisConstant;
+import com.itheima.health.entity.PageResult;
+import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.Setmeal;
 import com.itheima.health.service.SetmealService;
@@ -84,5 +86,21 @@ public class SetmealController {
         }
         //新增套餐成功
         return new Result(true,MessageConstant.ADD_SETMEAL_SUCCESS);
+    }
+
+
+    /**
+     * 分页查询
+     * @param queryPageBean
+     * @return
+     */
+    @RequestMapping("/findPage")
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
+        PageResult pageResult = setmealService.pageQuery(
+                queryPageBean.getCurrentPage(),
+                queryPageBean.getPageSize(),
+                queryPageBean.getQueryString()
+        );
+        return pageResult;
     }
 }

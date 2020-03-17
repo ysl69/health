@@ -1,5 +1,6 @@
 package com.itheima.health.service;
 
+import com.itheima.health.entity.PageResult;
 import com.itheima.health.pojo.Setmeal;
 
 /**
@@ -15,4 +16,14 @@ public interface SetmealService {
      * @param checkgroupIds
      */
     void add(Setmeal setmeal, Integer[] checkgroupIds);
+
+
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param queryString
+     * @return
+     */
+    PageResult pageQuery(Integer currentPage, Integer pageSize, String queryString);
 }

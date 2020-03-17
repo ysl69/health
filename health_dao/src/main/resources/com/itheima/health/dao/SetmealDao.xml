@@ -19,4 +19,13 @@
         values
         (#{setmeal_id},#{checkgroup_id})
     </insert>
+
+
+    <!--分页查询-->
+    <select id="selectByCondition" parameterType="string" resultType="com.itheima.health.pojo.CheckItem">
+        SELECT * FROM t_setmeal
+        <if test="value != null and value.length >0">
+            WHERE code = #{value} or name = #{value} or helpCode = #{value}
+        </if>
+    </select>
 </mapper>

@@ -1,5 +1,7 @@
 package com.itheima.health.dao;
 
+import com.github.pagehelper.Page;
+import com.itheima.health.pojo.CheckItem;
 import com.itheima.health.pojo.Setmeal;
 import org.springframework.stereotype.Repository;
 
@@ -25,4 +27,13 @@ public interface SetmealDao {
      * @param map
      */
     void setSetmealAndCheckGroup(Map<String, Integer> map);
+
+
+    /**
+     * 分页查询
+      * @param queryString
+     * @return
+     */
+    Page<CheckItem> selectByCondition(String queryString);
+
 }
