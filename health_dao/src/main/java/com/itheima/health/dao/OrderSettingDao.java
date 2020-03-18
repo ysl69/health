@@ -4,6 +4,8 @@ import com.itheima.health.pojo.OrderSetting;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author ysl
@@ -34,4 +36,12 @@ public interface OrderSettingDao {
      * @param orderSetting
      */
     void add(OrderSetting orderSetting);
+
+
+    /**
+     * 根据日期查询预约设置数据
+     * @param map
+     * @return
+     */
+    List<OrderSetting> getOrderSettingByMonth(Map map);
 }

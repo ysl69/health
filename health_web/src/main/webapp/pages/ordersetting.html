@@ -136,8 +136,23 @@
             },
             created: function () {//在vue初始化时调用
                 this.initData(null);
+                this.createdData();
             },
             methods: {
+                createdData(){
+                    axios.post("/ordersetting/getOrderSettingByMonth.do?date="+this.currentYear+"-"+this.currentMonth).then((response)=>{
+                        if (response.data.flag){
+                            this.leftobj = response.data.data;
+                            this.$message({
+                                message: response.data.message,
+                                type: "success"
+                            })
+                        } else {
+                            this.$message.error(response.data.message);
+                        }
+                    })
+                },
+
 				//预约设置
                 handleOrderSet(day){
                 },
@@ -223,18 +238,19 @@
                         this.days.push(dayobject);
                     }
                     
-                    /*this.leftobj = [
+                    this.leftobj = [
                         { date: 1, number: 120, reservations: 1 },
                         { date: 3, number: 120, reservations: 1 },
                         { date: 4, number: 120, reservations: 120 },
                         { date: 6, number: 120, reservations: 1 },
                         { date: 8, number: 120, reservations: 1 }
-                    ];*/
+                    ];
                 },
 				//切换到当前月份
                 goCurrentMonth: function (year, month) {
                     var d = new Date();
                     this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+                    this.createdData();
                 },
 				//向前一个月
                 pickPre: function (year, month) {
@@ -244,12 +260,14 @@
                     var d = new Date(this.formatDate(year, month, 1));
                     d.setDate(0);
                     this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+                    this.createdData();
                 },
 				//向后一个月
                 pickNext: function (year, month) {
                     var d = new Date(this.formatDate(year, month, 1));
                     d.setDate(35);////获取指定天之后的日期
                     this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+                    this.createdData();
                 },
                 // 返回 类似 2016-01-02 格式的字符串
                 formatDate: function (year, month, day) {
