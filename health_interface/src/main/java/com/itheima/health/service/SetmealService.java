@@ -3,6 +3,8 @@ package com.itheima.health.service;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.pojo.Setmeal;
 
+import java.util.List;
+
 /**
  * @Author ysl
  * @Date 2020/3/16 20:36
@@ -26,4 +28,9 @@ public interface SetmealService {
      * @return
      */
     PageResult pageQuery(Integer currentPage, Integer pageSize, String queryString);
+
+
+
+
+    List<Setmeal> findAll();
 }
