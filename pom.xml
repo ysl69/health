@@ -18,6 +18,7 @@
         <module>dubbo_consumer</module>
         <module>quartz_demo</module>
         <module>health_jobs</module>
+        <module>helthmobile_web</module>
     </modules>
 
     <packaging>pom</packaging>

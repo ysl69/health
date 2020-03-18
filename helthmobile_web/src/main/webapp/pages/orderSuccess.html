@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../img/asset-favico.ico">
+        <title>预约须知</title>
+        <link rel="stylesheet" href="../css/page-health-orderNotice.css" />
+        <script src="../plugins/jquery/dist/jquery.min.js"></script>
+        <script src="../plugins/healthmobile.js"></script>
+        <script src="../plugins/vue/vue.js"></script>
+        <script src="../plugins/vue/axios-0.18.0.js"></script>
+        <script>
+            var id = getUrlParam("orderId");
+        </script>
+    </head>
+    <body data-spy="scroll" data-target="#myNavbar" data-offset="150">
+        <div id="app" class="app">
+            <!-- 页面头部 -->
+            <div class="top-header">
+                <span class="f-left"><i class="icon-back" onclick="history.go(-1)"></i></span>
+                <span class="center">传智健康</span>
+                <span class="f-right"><i class="icon-more"></i></span>
+            </div>
+            <!-- 页面内容 -->
+            <div class="contentBox">
+                <div class="notice-article">
+                    <div class="info-title">
+                        <span class="name">体检预约成功</span>
+                    </div>
+                    <div class="notice-item">
+                        <div class="item-title">预约信息</div>
+                        <div class="item-content">
+                            <p>体检人：{{orderInfo.member}}</p>
+                            <p>体检套餐：{{orderInfo.setmeal}}</p>
+                            <p>体检日期：{{orderInfo.orderDate}}</p>
+                            <p>预约类型：{{orderInfo.orderType}}</p>
+                        </div>
+                    </div>
+                    <div class="notice-item">
+                        <div class="item-title">注意事项</div>
+                        <div class="item-content">
+                            <p>1、体检前三天饮食不宜有太大变化，尽量保证清淡饮食，避免油腻、过甜、过咸的食物，避免饮食不均暴饮暴食，以免影响检查结果。</p>
+                            <p>2、体检前要注意好好休息，尽量不要做剧烈运动以及情绪也不宜激动，要保证充足的睡眠时间，调整好自己的身体状态。</p>
+                            <p>3、体检前不要饮酒，酒精会影响到检查的准确性，如导致甘油三酯、转氨酶等检查结果出现异常，干扰到很多检查项目。</p>
+                            <p>4、体检当天应该保证穿着轻便、简单，另外女士要注意不要穿连裙、连裤袜，以及不要佩戴饰品等，以免影响检查。</p>
+                            <p>5、女士朋友要注意避开经期，以防经期影响到相关的检查项目。</p>
+                            <p>6、如果有前列腺或妇科B超检查，需要憋尿，检前可以适当饮水，以保证膀胱充盈后再进行检查。</p>
+                            <p>7、如果有妇科检查，要注意检前不宜进行夫妻生活，夫妻生活会影响到阴道检查，干扰检查的结果。</p>
+                            <p>8、做妇科检查前也不宜过度清洁，不宜使用阴道药物，避免过度清洁或是药物干扰，影响到检查的结果。</p>
+                            <p>9、积极配合医师的检查，保持良好的心态，告知医师自己的真实情况，有助于医师帮助判断身体健康状况。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        var vue = new Vue({
+            el:'#app',
+            data:{
+                orderInfo:{}
+            },
+            mounted(){
+                axios.post("/order/findById.do?id=" + id).then((response) => {
+                    this.orderInfo = response.data.data;
+                });
+            }
+        });
+    </script>
+</html>

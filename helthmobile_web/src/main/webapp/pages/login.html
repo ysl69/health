@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../img/asset-favico.ico">
+        <title>登录</title>
+        <link rel="stylesheet" href="../css/page-health-login.css" />
+        <link rel="stylesheet" href="../plugins/elementui/index.css" />
+        <script src="../plugins/jquery/dist/jquery.min.js"></script>
+        <script src="../plugins/healthmobile.js"></script>
+        <script src="../plugins/vue/vue.js"></script>
+        <script src="../plugins/vue/axios-0.18.0.js"></script>
+        <script src="../plugins/elementui/index.js"></script>
+    </head>
+    <body data-spy="scroll" data-target="#myNavbar" data-offset="150">
+    <div class="app" id="app">
+        <!-- 页面头部 -->
+        <div class="top-header">
+            <span class="f-left"><i class="icon-back"></i></span>
+            <span class="center">传智健康</span>
+            <span class="f-right"><i class="icon-more"></i></span>
+        </div>
+        <div style="margin-left: 20px">手机快速登录</div>
+        <!-- 页面内容 -->
+        <div class="contentBox">
+            <div class="login">
+                <form id='login-form'>
+                    <div class="input-row">
+                        <label>手机号</label>
+                        <div class="loginInput">
+                            <input v-model="loginInfo.telephone" id='account' type="text" placeholder="请输入手机号">
+                            <input id="validateCodeButton" @click="sendValidateCode()" type="button" style="font-size: 12px" value="获取验证码">
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <label>验证码</label>
+                        <div class="loginInput">
+                            <input v-model="loginInfo.validateCode" style="width:80%" id='password' type="password" placeholder="请输入验证码">
+                        </div>
+                    </div>
+                    <div class="input-row" style="font-size: 12px">
+                        <input type="checkbox" checked>
+                        阅读并同意《传智健康用户协议》《传智健康隐私条款》
+                    </div>
+                    <div class="btn yes-btn"><a @click="login()" href="#">登录</a></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </body>
+    <script>
+        var vue = new Vue({
+            el:'#app',
+            data:{
+                loginInfo:{}//登录信息
+            },
+            methods:{
+                //发送验证码
+                sendValidateCode(){
+                    var telephone = this.loginInfo.telephone;
+                    if (!checkTelephone(telephone)) {
+                        this.$message.error('请输入正确的手机号');
+                        return false;
+                    }
+                    validateCodeButton = $("#validateCodeButton")[0];
+                    clock = window.setInterval(doLoop, 1000); //一秒执行一次
+                    axios.post("/validateCode/send4Login.do?telephone=" + telephone).then((response) => {
+                        if(!response.data.flag){
+                            //验证码发送失败
+                            this.$message.error('验证码发送失败，请检查手机号输入是否正确');
+                        }
+                    });
+                },
+                //登录
+                login(){
+                    var telephone = this.loginInfo.telephone;
+                    if (!checkTelephone(telephone)) {
+                        this.$message.error('请输入正确的手机号');
+                        return false;
+                    }
+                    axios.post("/login/check.do",this.loginInfo).then((response) => {
+                        if(response.data.flag){
+                            //登录成功,跳转到index.html
+                            window.location.href="index.html";
+                        }else{
+                            //失败，提示失败信息
+                            this.$message.error(response.data.message);
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</html>
