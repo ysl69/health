@@ -28,4 +28,10 @@
             WHERE code = #{value} or name = #{value} or helpCode = #{value}
         </if>
     </select>
+
+
+    <!--查询所有-->
+    <select id="findAll" resultType="com.itheima.health.pojo.Setmeal">
+        SELECT * FROM t_setmeal
+    </select>
 </mapper>

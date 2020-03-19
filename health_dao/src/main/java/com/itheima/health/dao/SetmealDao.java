@@ -5,6 +5,7 @@ import com.itheima.health.pojo.CheckItem;
 import com.itheima.health.pojo.Setmeal;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,4 +37,10 @@ public interface SetmealDao {
      */
     Page<CheckItem> selectByCondition(String queryString);
 
+
+    /**
+     * 查询所有套餐信息
+     * @return
+     */
+    List<Setmeal> findAll();
 }

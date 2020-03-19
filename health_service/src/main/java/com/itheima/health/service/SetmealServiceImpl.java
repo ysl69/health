@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,6 +64,16 @@ public class SetmealServiceImpl implements SetmealService{
         PageHelper.startPage(currentPage,pageSize);
         Page<CheckItem> page = setmealDao.selectByCondition(queryString);
         return new PageResult(page.getTotal(),page.getResult());
+    }
+
+
+    /**
+     * 查询所有套餐信息
+     * @return
+     */
+    @Override
+    public List<Setmeal> findAll() {
+        return setmealDao.findAll();
     }
 
 

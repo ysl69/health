@@ -30,7 +30,7 @@
     <!-- 指定应用名称 -->
     <dubbo:application name="healthmobile_web" />
     <!--指定服务注册中心地址-->
-    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+    <dubbo:registry address="zookeeper://192.168.25.145:2181"/>
     <!--批量扫描-->
     <dubbo:annotation package="com.itheima.health.controller" />
     <!--

@@ -30,7 +30,9 @@ public interface SetmealService {
     PageResult pageQuery(Integer currentPage, Integer pageSize, String queryString);
 
 
-
-
+    /**
+     * 查询所有套餐信息
+     * @return
+     */
     List<Setmeal> findAll();
 }
