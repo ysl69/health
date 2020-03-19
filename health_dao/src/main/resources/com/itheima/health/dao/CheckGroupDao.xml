@@ -83,4 +83,23 @@
     <select id="findAll" resultType="com.itheima.health.pojo.CheckGroup">
         SELECT  * FROM  t_checkgroup
     </select>
+
+
+    <resultMap type="com.itheima.health.pojo.CheckGroup" id="findByIdResultMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <collection property="checkItems" column="id"
+                    select="com.itheima.health.dao.CheckItemDao.findCheckItemListById">
+        </collection>
+    </resultMap>
+    <!--根据套餐id查询检查项信息-->
+    <select id="findCheckGroupListById" resultMap="findByIdResultMap">
+        select * from t_checkgroup  where id
+        in (select checkgroup_id from t_setmeal_checkgroup where setmeal_id=#{id})
+    </select>
 </mapper>

@@ -78,6 +78,17 @@ public class SetmealServiceImpl implements SetmealService{
 
 
     /**
+     * 根据id查询套餐信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Setmeal findById(int id) {
+        return setmealDao.findById(id);
+    }
+
+
+    /**
      * 将图片名称保存到Redis
      * @param img
      */

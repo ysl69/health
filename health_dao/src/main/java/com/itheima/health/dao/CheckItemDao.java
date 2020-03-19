@@ -67,4 +67,7 @@ public interface CheckItemDao {
      */
     List<CheckItem> findAll();
 
+
+
+    List<CheckItem> findCheckItemListById(Integer id);
 }

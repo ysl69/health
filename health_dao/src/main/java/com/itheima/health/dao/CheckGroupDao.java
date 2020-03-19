@@ -75,4 +75,8 @@ public interface CheckGroupDao {
      */
     List<CheckGroup> findAll();
 
+
+
+    List<CheckGroup> findCheckGroupListById(Integer id);
+
 }

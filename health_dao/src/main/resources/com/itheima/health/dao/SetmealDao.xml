@@ -34,4 +34,25 @@
     <select id="findAll" resultType="com.itheima.health.pojo.Setmeal">
         SELECT * FROM t_setmeal
     </select>
+
+
+    <resultMap type="com.itheima.health.pojo.Setmeal" id="findByIdResultMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <result column="img" property="img"/>
+        <collection property="checkGroups" column="id"
+                select="com.itheima.health.dao.CheckGroupDao.findCheckGroupListById">
+        </collection>
+    </resultMap>
+    <!--根据id查询套餐信息-->
+    <select id="findById" resultMap="findByIdResultMap">
+        SELECT * FROM t_setmeal WHERE id = #{id}
+    </select>
 </mapper>
