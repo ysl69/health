@@ -13,7 +13,7 @@ import com.aliyuncs.profile.IClientProfile;
  * 短信发送工具类
  */
 public class SMSUtils {
-	public static final String VALIDATE_CODE = "SMS_159620392";//发送短信验证码
+	public static final String VALIDATE_CODE = "SMS_1865478";//发送短信验证码
 	public static final String ORDER_NOTICE = "SMS_159771588";//体检预约成功通知
 
 	/**
@@ -30,8 +30,8 @@ public class SMSUtils {
 		final String product = "Dysmsapi";// 短信API产品名称（短信产品名固定，无需修改）
 		final String domain = "dysmsapi.aliyuncs.com";// 短信API产品域名（接口地址固定，无需修改）
 		// 替换成你的AK
-		final String accessKeyId = "LTAIJyN0mgef7r0I";// 你的accessKeyId,参考本文档步骤2
-		final String accessKeySecret = "gwUhDh4lpIDEgPFFPGjmopQTKIKEGz";// 你的accessKeySecret，参考本文档步骤2
+		final String accessKeyId = "LIJyN0gef0";// 你的accessKeyId,参考本文档步骤2
+		final String accessKeySecret = "gwUhDpIDEgPFGjmopQIKG";// 你的accessKeySecret，参考本文档步骤2
 		// 初始化ascClient,暂时不支持多region（请勿修改）
 		IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
 		DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
@@ -45,7 +45,7 @@ public class SMSUtils {
 		// 必填:短信签名-可在短信控制台中找到
 		request.setSignName("L先生");
 		// 必填:短信模板-可在短信控制台中找到
-		request.setTemplateCode(templateCode);
+		request.setTemplateCode(VALIDATE_CODE);
 		// 可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
 		// 友情提示:如果JSON中需要带换行符,请参照标准的JSON协议对换行符的要求,比如短信内容中包含\r\n的情况在JSON中需要表示成\\r\\n,否则会导致JSON在服务端解析失败
 		request.setTemplateParam("{\"code\":\""+param+"\"}");

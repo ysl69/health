@@ -88,7 +88,11 @@
         el:'#app',
         data:{
             imgUrl:null,//套餐对应的图片链接
-            setmeal:{}
+            setmeal:{},//套餐信息
+            orderInfo:{
+                setmealId: id,
+                sex: '1'
+            }//预约信息
         },
         methods:{
             toOrderInfo(){
