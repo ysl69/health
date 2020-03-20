@@ -47,4 +47,14 @@
             </if>
         </where>
     </select>
+
+    <!--根据id查询预约信息，包括套餐信息和会员信息-->
+    <select id="findById4Detail" resultType="java.util.Map" parameterType="int">
+         select m.name member ,s.name setmeal,o.orderDate orderDate,o.orderType orderType
+    from
+    t_order o,
+    t_member m,
+    t_setmeal s
+    where o.member_id=m.id and o.setmeal_id=s.id and o.id=#{id}
+    </select>
 </mapper>

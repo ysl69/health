@@ -104,4 +104,22 @@ public class OrderServiceImpl implements OrderService{
 
         return new Result(true,MessageConstant.ORDER_SUCCESS,order);
     }
+
+
+    /**
+     * 根据id查询预约信息，包括套餐信息和会员信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Result findById4Detail(Integer id) throws Exception {
+        Map map = orderDao.findById4Detail(id);
+        if (map != null){
+            //处理日期格式
+            Date orderDate = (Date) map.get("orderDate");
+            map.put("orderDate",DateUtils.parseDate2String(orderDate));
+            return new Result(true,MessageConstant.QUERY_ORDER_SUCCESS,map);
+        }
+        return new Result(false,MessageConstant.QUERY_ORDER_FAIL);
+    }
 }
