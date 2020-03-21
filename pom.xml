@@ -19,6 +19,7 @@
         <module>quartz_demo</module>
         <module>health_jobs</module>
         <module>healthmobile_web</module>
+        <module>springsecuritydemo</module>
     </modules>
 
     <packaging>pom</packaging>
