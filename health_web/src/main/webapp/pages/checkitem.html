@@ -354,8 +354,24 @@
                                 //删除失败
                                 this.$message.error(res.data.message);
                             }
-                        })
+                        }).catch((error)=>{
+                            this.showMessage(error);
+                        });
+                    }).catch(()=>{
+                        //点击取消按钮执行此代码
+                        this.$message('操作已取消');
                     })
+                },
+                //权限不足提示
+                showMessage(r){
+                    if(r == 'ERROR: Request failed with status code 403'){
+                        //权限不足
+                        this.$message.error('无访问权限');
+                        return;
+                    }else {
+                        this.$message.error('未知错误');
+                        return;
+                    }
                 }
             }
         })

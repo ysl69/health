@@ -33,7 +33,9 @@
     <!--指定服务注册中心地址-->
     <dubbo:registry address="zookeeper://192.168.25.145:2181"/>
     <!--批量扫描-->
-    <dubbo:annotation package="com.itheima.health.controller" />
+    <!--<dubbo:annotation package="com.itheima.health.controller" />-->
+    <dubbo:annotation package="com.itheima.health"></dubbo:annotation>
+
     <!--
         超时全局设置 10分钟
         check=false 不检查服务提供方，开发阶段建议设置为false
@@ -50,4 +52,5 @@
 
 
 <import resource="classpath:spring-redis.xml"></import>
+    <import resource="spring-security.xml"></import>
 </beans>

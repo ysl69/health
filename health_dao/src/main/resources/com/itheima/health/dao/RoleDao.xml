@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.health.dao.RoleDao">
+
+    <resultMap id="roleMap" type="com.itheima.health.pojo.Role">
+        <id column="id" property="id"></id>
+        <collection property="permissions" column="id" select="com.itheima.health.dao.PermissionDao.findPermissionsByRoleId"></collection>
+    </resultMap>
+    <select id="findRolesByUserId" parameterType="int" resultMap="roleMap">
+        SELECT r.* FROM t_role r,t_user_role ur WHERE r.id = ur.role_id AND ur.user_id = #{userId}
+    </select>
+</mapper>
