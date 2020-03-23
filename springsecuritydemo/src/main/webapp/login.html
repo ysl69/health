@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>登录</title>
+    <title>Title</title>
 </head>
 <body>
-    <form action="/login.do" method="post">
-     username:<input type="text" name="username"><br>
-     password:<input type="password" name="password"><br>
-        <input type="submit" value="submit">
+    <form action='login.do' method='POST'>
+        <table>
+            <tr><td>用户名:</td><td><input type='text' name='username' value=''></td></tr>
+            <tr><td>密码:</td><td><input type='password' name='password'/></td></tr>
+            <tr><td colspan='2'><input name="submit" type="submit" value="提交"/></td></tr>
+            <!--<input name="_csrf" type="hidden" value="cab2c93b-1801-420e-9abd-8269f07bd216" />-->
+        </table>
     </form>
 </body>
 </html>

@@ -1,31 +1,31 @@
-package com.itheima.health;
+package com.test;
 
 import org.junit.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @Author ysl
- * @Date 2020/3/21 18:29
+ * @Date 2020/3/23 19:16
  * @Description:
  **/
 
 
 public class TestSpringSecurity {
 
-
+    // SpringSecurity加盐加密
     @Test
     public void testSpringSecurity(){
-        //$2a$10$A3HXRV55zsfqvtQ9QAPre.4PT7WPRxDlPSpeQl11TrWxC0xUfzlcK
-        //$2a$10$Pvqi9SbXfJWmkfo0V9RGBO0ROsdqLG2RfrgI4dJyTjEi6KSTGcOhq
+        // $2a$10$dyIf5fOjCRZs/pYXiBYy8uOiTa1z7I.mpqWlK5B/0icpAKijKCgxe
+        // $2a$10$OphM.agzJ55McriN2BzCFeoLZh/z8uL.8dcGx.VCnjLq01vav7qEm
+
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String s = encoder.encode("abc");
         System.out.println(s);
         String s1 = encoder.encode("abc");
         System.out.println(s1);
 
-
-        //进行判断
-        boolean b = encoder.matches("abc", "$2a$10$A3HXRV55zsfqvtQ9QAPre.4PT7WPRxDlPSpeQl11TrWxC0xUfzlcK");
+        // 进行判断
+        boolean b = encoder.matches("abc", "$2a$10$dyIf5fOjCRZs/pYXiBYy8uOiTa1z7I.mpqWlK5B/0icpAKijKCgxe");
         System.out.println(b);
     }
 }

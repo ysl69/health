@@ -24,6 +24,7 @@
     <security:http security="none" pattern="/css/**" />
     <security:http security="none" pattern="/img/**" />
     <security:http security="none" pattern="/plugins/**" />
+    <security:http security="none" pattern="/template/**"></security:http>
 
     <!--开启注解方式权限控制-->
     <security:global-method-security pre-post-annotations="enabled" />
@@ -63,8 +64,7 @@
                              login-processing-url="/login.do"
                              default-target-url="/pages/main.html"
                              authentication-failure-url="/login.html"
-                             always-use-default-target="true"
-        />
+                             always-use-default-target="true"></security:form-login>
 
         <!--
           csrf：对应CsrfFilter过滤器
@@ -85,24 +85,26 @@
     </security:http>
 
 
-    <!--配置密码加密对象-->
-    <bean id="passwordEncoder"
-          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-
-
     <!--
-        三：认证管理，定义登录账号名和密码，并授予访问的角色、权限
-        authentication-manager：认证管理器，用于处理认证操作
-    -->
+       三：认证管理，定义登录账号名和密码，并授予访问的角色、权限
+       authentication-manager：认证管理器，用于处理认证操作
+   -->
     <security:authentication-manager>
         <!--
             authentication-provider：认证提供者，执行具体的认证逻辑
         -->
         <security:authentication-provider user-service-ref="springSecurityUserService">
             <!--指定密码加密策略-->
-            <security:password-encoder ref="passwordEncoder"></security:password-encoder>
+            <security:password-encoder ref="bCryptPasswordEncoder"></security:password-encoder>
         </security:authentication-provider>
     </security:authentication-manager>
 
     <context:component-scan base-package="com.itheima.health"></context:component-scan>
+
+
+    <!--配置密码加密对象-->
+    <!--新增用户：开发中真去做这个功能，在保存用户的时候，使用bCryptPasswordEncoder.encode("123")-进行加密处理-->
+    <bean id="bCryptPasswordEncoder"
+          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+
 </beans>

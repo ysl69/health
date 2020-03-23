@@ -45,16 +45,22 @@ public class SpringSecurityUserService implements UserDetailsService {
             //用户名不存在，抛出异常UsernameNotFoundException
             return null;
         }
+        //授权
         List<GrantedAuthority> list = new ArrayList<>();
-        Set<Role> roles = user.getRoles();
-        for (Role role : roles) {
-            Set<Permission> permissions = role.getPermissions();
-            for (Permission permission : permissions) {
-                //授权
-                list.add(new SimpleGrantedAuthority(permission.getKeyword()));
+        if (user != null && user.getRoles() != null && user.getRoles().size() > 0){
+            Set<Role> roles = user.getRoles();
+            for (Role role : roles) {
+                if (role!=null && role.getPermissions()!=null && role.getPermissions().size()>0){
+                    Set<Permission> permissions = role.getPermissions();
+                    for (Permission permission : permissions) {
+                        String keyword = permission.getKeyword();
+                        //授权
+                        list.add(new SimpleGrantedAuthority(keyword));
+                    }
+                }
             }
-
         }
+
             /**
              * User()
              * 1：指定用户名

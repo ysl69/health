@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Author ysl
  * @Date 2020/3/21 11:25
@@ -33,5 +36,22 @@ public class MemberServiceImpl implements MemberService {
         }
 
         memberDao.add(member);
+    }
+
+
+    /**
+     * 根据月份统计会员数量
+     * @param months
+     * @return
+     */
+    @Override
+    public List<Integer> findMemberCountByMonth(List<String> months) {
+        List<Integer> list = new ArrayList<>();
+        for (String m : months) {
+            m = m + "-31"; //格式：2019-04-31
+            Integer count = memberDao.findMemberCountBeforeDate(m);
+            list.add(count);
+        }
+        return list;
     }
 }

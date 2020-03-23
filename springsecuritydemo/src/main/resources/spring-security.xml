@@ -16,14 +16,16 @@
                           http://www.springframework.org/schema/security
                           http://www.springframework.org/schema/security/spring-security.xsd">
     <!--一：定义哪些链接可以放行-->
-    <!--http：用于定义相关权限控制
-        指定哪些资源不需要进行权限校验，可以使用通配符
-      -->
-    <security:http security="none" pattern="/js/**"></security:http>
-    <security:http security="none" pattern="/css/**"></security:http>
+    <!--
+  http：用于定义相关权限控制
+  指定哪些资源不需要进行权限校验，可以使用通配符
+-->
+    <security:http security="none" pattern="/js/**" />
+    <security:http security="none" pattern="/css/**" />
     <security:http security="none" pattern="/login.html"></security:http>
 
-
+    <!--开启注解方式权限控制-->
+    <security:global-method-security pre-post-annotations="enabled"></security:global-method-security>
 
     <!--
         二：定义哪些链接不可以放行，即需要有角色、权限才可以放行
@@ -34,6 +36,58 @@
         use-expressions：用于指定intercept-url中的access属性是否使用表达式
     -->
     <security:http auto-config="true" use-expressions="true">
+
+        <!--只要认证通过就可以访问-->
+        <security:intercept-url pattern="/index.jsp"  access="isAuthenticated()" />
+        <security:intercept-url pattern="/a.html"  access="isAuthenticated()" />
+
+        <!--拥有add权限就可以访问b.html页面-->
+        <security:intercept-url pattern="/b.html"  access="hasAuthority('add')" />
+
+        <!--拥有ROLE_ADMIN角色就可以访问c.html页面-->
+        <security:intercept-url pattern="/c.html"  access="hasRole('ROLE_ADMIN')" />
+
+        <!--拥有ROLE_ADMIN角色就可以访问d.html页面，
+            注意：此处虽然写的是ADMIN角色，框架会自动加上前缀ROLE_-->
+        <security:intercept-url pattern="/d.html"  access="hasRole('ABC')" />
+
+
+        <!--
+        form-login：定义表单登录信息
+        -->
+        <security:form-login login-page="/login.html"
+                             username-parameter="username"
+                             password-parameter="password"
+                             login-processing-url="/login.do"
+                             default-target-url="/index.html"
+                             authentication-failure-url="/login.html"
+                             always-use-default-target="true"
+        />
+
+        <!--
+  logout：退出登录
+  logout-url：退出登录操作对应的请求路径
+  logout-success-url：退出登录后的跳转页面
+-->
+        <security:logout logout-url="/logout.do"
+                         logout-success-url="/login.html" invalidate-session="true"/>
+        <!--
+          logout：退出登录
+          logout-url：退出登录操作对应的请求路径
+          logout-success-url：退出登录后的跳转页面
+        -->
+        <security:logout logout-url="/logout.do"
+                         logout-success-url="/login.html" invalidate-session="true"/>
+
+
+
+        <!--
+  csrf：对应CsrfFilter过滤器
+  disabled：是否启用CsrfFilter过滤器，如果使用自定义登录页面需要关闭此项，否则登录操作会被禁用（403）
+-->
+        <security:csrf disabled="true"></security:csrf>
+
+
         <!--
             intercept-url：定义一个拦截规则
             pattern：对哪些url进行权限控制
@@ -41,55 +95,7 @@
               请求的用户只需拥有其中的一个角色就能成功访问对应的URL
         -->
         <security:intercept-url pattern="/**"  access="hasRole('ROLE_ADMIN')" />
-
-        <!--只要认证通过就可以访问-->
-        <security:intercept-url pattern="/index.jsp" access="isAuthenticated()"></security:intercept-url>
-        <security:intercept-url pattern="/a.html" access="isAuthenticated()"></security:intercept-url>
-
-        <!--拥有add权限就可以访问b.html页面-->
-        <security:intercept-url pattern="/b.html" access="hasAuthority('add')"></security:intercept-url>
-
-        <!--拥有ROLE_ADMIN角色就可以访问c.html页面-->
-        <security:intercept-url pattern="/c.html" access="hasRole('ROLE_ADMIN')"></security:intercept-url>
-
-        <!--拥有ROLE_ADMIN角色就可以访问d.html页面，
-    注意：此处虽然写的是ADMIN角色，框架会自动加上前缀ROLE_-->
-        <security:intercept-url pattern="/d.html"  access="hasRole('ABC')"></security:intercept-url>
-
-
-
-        <!--
-              form-login：定义表单登录信息
-              -->
-        <security:form-login login-page="/login.html"
-                             username-parameter="username"
-                             password-parameter="password"
-                             login-processing-url="/login.do"
-                             default-target-url="/pages/main.html"
-                             authentication-failure-url="/login.html"
-                             always-use-default-target="true"></security:form-login>
-
-
-        <!--
-    logout：退出登录
-    logout-url：退出登录操作对应的请求路径
-    logout-success-url：退出登录后的跳转页面
-    -->
-        <security:logout logout-url="/logout.do"
-                         logout-success-url="/login.html" invalidate-session="true"></security:logout>
-
-        <!--
-            csrf：对应CsrfFilter过滤器
-             disabled：是否启用CsrfFilter过滤器，如果使用自定义登录页面需要关闭此项，否则登录操作会被禁用（403）
-             关闭盗链安全请求
-        -->
-        <security:csrf disabled="true"></security:csrf>
     </security:http>
-
-
-
-
-
 
     <!--
         三：认证管理，定义登录账号名和密码，并授予访问的角色、权限
@@ -103,31 +109,23 @@
             <!--
                 user-service：用于获取用户信息，提供给authentication-provider进行认证
             -->
-            <security:user-service>
-                <!--
+            <!--<security:user-service>
+                &lt;!&ndash;
                     user：定义用户信息，可以指定用户名、密码、角色，后期可以改为从数据库查询用户信息
               {noop}：表示当前使用的密码为明文
-                -->
-                <!--<security:user name="admin" password="{noop}admin" authorities="ROLE_ADMIN"/>-->
+                &ndash;&gt;
+                <security:user name="admin" password="{noop}admin" authorities="ROLE_ADMIN"/>
 
-            </security:user-service>
+            </security:user-service>-->
+
 
             <!--指定密码加密策略-->
             <security:password-encoder ref="passwordEncoder"></security:password-encoder>
         </security:authentication-provider>
-
     </security:authentication-manager>
+    <context:component-scan base-package="com.itheima"/>
+    <mvc:annotation-driven></mvc:annotation-driven>
 
     <!--配置密码加密对象-->
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
-
-    <context:component-scan base-package="com.itheima"></context:component-scan>
-
-    <mvc:annotation-driven></mvc:annotation-driven>
-
-    <!--开启注解方式权限控制-->
-    <security:global-method-security pre-post-annotations="enabled"></security:global-method-security>
-
-
-
 </beans>
