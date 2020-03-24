@@ -28,7 +28,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/getUsername")
-    public Result getUsername() throws Exception{
+    public Result getUsername(){
 
 
         try {

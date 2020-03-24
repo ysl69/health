@@ -9,5 +9,5 @@ import com.itheima.health.pojo.User;
  **/
 public interface UserService {
 
-    User findUSerByUsername(String username);
+    User findUserByUsername(String username);
 }

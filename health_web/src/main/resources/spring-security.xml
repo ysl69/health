@@ -6,105 +6,97 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:security="http://www.springframework.org/schema/security"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-                  http://www.springframework.org/schema/beans/spring-beans.xsd
-                  http://www.springframework.org/schema/mvc
-                  http://www.springframework.org/schema/mvc/spring-mvc.xsd
-                  http://code.alibabatech.com/schema/dubbo
-                  http://code.alibabatech.com/schema/dubbo/dubbo.xsd
-                  http://www.springframework.org/schema/context
-                  http://www.springframework.org/schema/context/spring-context.xsd
+                          http://www.springframework.org/schema/beans/spring-beans.xsd
+                          http://www.springframework.org/schema/mvc
+                          http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                          http://code.alibabatech.com/schema/dubbo
+                          http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+                          http://www.springframework.org/schema/context
+                          http://www.springframework.org/schema/context/spring-context.xsd
                           http://www.springframework.org/schema/security
                           http://www.springframework.org/schema/security/spring-security.xsd">
-    <!--一：定义哪些链接可以放行-->
-    <!--
-      http：用于定义相关权限控制
-      指定哪些资源不需要进行权限校验，可以使用通配符
+    <!--1：配置哪些链接不需要权限控制，可以访问（放行）-->
+    <!--css、js、image、登录页面、注册页面
+        security:http security="none" pattern="/css/**"
+                不需要配置权限，可以访问css下的文件和js下的文件
     -->
-    <security:http security="none" pattern="/js/**" />
-    <security:http security="none" pattern="/css/**" />
-    <security:http security="none" pattern="/img/**" />
-    <security:http security="none" pattern="/plugins/**" />
+    <security:http security="none" pattern="/css/**"></security:http>
+    <security:http security="none" pattern="/js/**"></security:http>
+    <security:http security="none" pattern="/img/**"></security:http>
+    <security:http security="none" pattern="/plugins/**"></security:http>
     <security:http security="none" pattern="/template/**"></security:http>
 
-    <!--开启注解方式权限控制-->
-    <security:global-method-security pre-post-annotations="enabled" />
-    <!--
-        二：定义哪些链接不可以放行，即需要有角色、权限才可以放行
-        http：用于定义相关权限控制
-        auto-config：是否自动配置
-                        设置为true时框架会提供默认的一些配置，例如提供默认的登录页面、登出处理等
-                        设置为false时需要显示提供登录表单配置，否则会报错
-        use-expressions：用于指定intercept-url中的access属性是否使用表达式
+    <!--对Controller类做权限，开启一个权限的支持-->
+    <security:global-method-security pre-post-annotations="enabled"></security:global-method-security>
+
+    <!--2：配置哪些链接需要指定权限才能进行访问
+        security:http标签：用来指定http访问的资源
+            auto-config="true"：自动配置，true，如果没有配置页面，SpringSecurity会自动提供配置页面（例如登录，退出...）
+            use-expressions="true"：是否使用表达式，true：表示使用表达式
+        security:intercept-url标签：控制页面的角色、权限、是否登录等等。哪些页面具有XX角色才能访问；哪些页面具有XX权限才能访问；
+            pattern="/**" access="hasRole('ROLE_USER')"：表示系统中所有的页面，必须具有ROLE_USER的角色才能访问
     -->
     <security:http auto-config="true" use-expressions="true">
-
-
         <security:headers>
-            <!--设置在页面可以通过iframe访问手保护的页面，默认为不允许访问-->
+            <!--设置在页面可以通过iframe访问受保护的页面，默认为不允许访问-->
             <security:frame-options policy="SAMEORIGIN"></security:frame-options>
         </security:headers>
+        <!--pages下的所有资源，只有认证通过才能访问-->
+        <security:intercept-url pattern="/pages/**" access="isAuthenticated()"></security:intercept-url>
 
+        <!--配置登录页面的form表单，处理登录页面、登录成功页面
+            login-page="/login.html"：指定登录页面
+            login-processing-url="/login.do"：指定登录页面的url
+            username-parameter="username"：指定登录表单中的登录名（username是默认值）
+            password-parameter="password"：指定登录表单中的密码（password是默认值）
+            default-target-url="/index.html"：默认登录成功后的页面
+            authentication-failure-url="/login.html"：默认认证登录失败执行的页面
 
-        <!--只要认证通过就可以访问-->
-        <!--
-            intercept-url：定义一个拦截规则
-            pattern：对哪些url进行权限控制
-            access：在请求对应的URL时需要什么权限，默认配置时它应该是一个以逗号分隔的角色列表，
-              请求的用户只需拥有其中的一个角色就能成功访问对应的URL
-            isAuthenticated()：需要经过认证后才能访问（不是匿名用户）
-        -->
-        <security:intercept-url pattern="/pages/**"  access="isAuthenticated()" />
+            always-use-default-target="true"：只要认证成功，始终跳转到默认的成功登录页面
 
-        <!--
-          form-login：定义表单登录信息
         -->
         <security:form-login login-page="/login.html"
+                             login-processing-url="/login.do"
                              username-parameter="username"
                              password-parameter="password"
-                             login-processing-url="/login.do"
                              default-target-url="/pages/main.html"
                              authentication-failure-url="/login.html"
                              always-use-default-target="true"></security:form-login>
-
-        <!--
-          csrf：对应CsrfFilter过滤器
-          disabled：是否启用CsrfFilter过滤器，如果使用自定义登录页面需要关闭此项，否则登录操作会被禁用（403）
-        -->
-        <security:csrf disabled="true"></security:csrf>
-
-        <!--
-          logout：退出登录
-          logout-url：退出登录操作对应的请求路径
-          logout-success-url：退出登录后的跳转页面
+        <!--退出
+            logout-url="/logout.do" ：退出的url
+            logout-success-url="/login.html" ：退出成功的访问的页面
+            invalidate-session="true" ：清空Session
         -->
         <security:logout logout-url="/logout.do"
-                         logout-success-url="/login.html" invalidate-session="true"/>
-
-
-
+                         logout-success-url="/login.html"
+                         invalidate-session="true"></security:logout>
+        <!--关闭盗链csrf-->
+        <security:csrf disabled="true"></security:csrf>
     </security:http>
+    <!--3：对当前登录人进行认证，认证后并进行授权
+        <security:user name="" password="" authorities="">
+            name；表示登录名
+            password：密码
+                SpringSecurity会使用加密手段对密码进行加密处理（保证系统认证的数据安全）
+                    使用PasswordEncoderFactories类进行处理
+                        默认的加密机制是： new BCryptPasswordEncoder();表示hash算法进行加密（后面讲）
+                        encoders.put("noop", NoOpPasswordEncoder.getInstance());表示明文加密手段
+                        例如：{noop}admin，此时admin就是明文密码，不需要进行加密
+
+            authorities：表示权限的名称
 
 
-    <!--
-       三：认证管理，定义登录账号名和密码，并授予访问的角色、权限
-       authentication-manager：认证管理器，用于处理认证操作
-   -->
+    -->
+    <!--账号和密码通过查询数据库的方式完成-->
     <security:authentication-manager>
-        <!--
-            authentication-provider：认证提供者，执行具体的认证逻辑
-        -->
         <security:authentication-provider user-service-ref="springSecurityUserService">
-            <!--指定密码加密策略-->
             <security:password-encoder ref="bCryptPasswordEncoder"></security:password-encoder>
         </security:authentication-provider>
     </security:authentication-manager>
 
-    <context:component-scan base-package="com.itheima.health"></context:component-scan>
-
-
-    <!--配置密码加密对象-->
+    <!--创建BCryptPasswordEncoder-->
     <!--新增用户：开发中真去做这个功能，在保存用户的时候，使用bCryptPasswordEncoder.encode("123")-进行加密处理-->
-    <bean id="bCryptPasswordEncoder"
-          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+    <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 
+    <context:component-scan base-package="com.itheima"></context:component-scan>
 </beans>

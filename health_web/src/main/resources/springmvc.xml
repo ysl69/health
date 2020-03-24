@@ -53,4 +53,7 @@
 
 <import resource="classpath:spring-redis.xml"></import>
     <import resource="spring-security.xml"></import>
+
+    <!--批量扫描-->
+    <dubbo:annotation package="com.itheima.health.controller"></dubbo:annotation>
 </beans>

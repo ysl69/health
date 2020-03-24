@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public User findUSerByUsername(String username) {
+    public User findUserByUsername(String username) {
         User user = userDao.findUserByUsername(username);
         return user;
     }

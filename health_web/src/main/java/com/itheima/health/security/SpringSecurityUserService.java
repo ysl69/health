@@ -26,48 +26,33 @@ import java.util.Set;
 public class SpringSecurityUserService implements UserDetailsService {
 
 
-    @Reference
+    @Reference //注意：此处要通过dubbo远程调用用户服务
     private UserService userService;
 
-
-
-    /**
-     * 根据用户名查询用户信息
-     * @param username
-     * @return
-     * @throws UsernameNotFoundException
-     */
-    @Override
+    //根据用户名查询用户信息
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //远程调用用户服务，根据用户名查询用户信息
-        com.itheima.health.pojo.User user = userService.findUSerByUsername(username);
-        if (user == null){
+        com.itheima.health.pojo.User user = userService.findUserByUsername(username);
+        if(user == null){
             //用户名不存在，抛出异常UsernameNotFoundException
             return null;
         }
-        //授权
-        List<GrantedAuthority> list = new ArrayList<>();
-        if (user != null && user.getRoles() != null && user.getRoles().size() > 0){
-            Set<Role> roles = user.getRoles();
-            for (Role role : roles) {
-                if (role!=null && role.getPermissions()!=null && role.getPermissions().size()>0){
-                    Set<Permission> permissions = role.getPermissions();
-                    for (Permission permission : permissions) {
-                        String keyword = permission.getKeyword();
-                        //授权
-                        list.add(new SimpleGrantedAuthority(keyword));
-                    }
-                }
+        List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+        Set<Role> roles = user.getRoles();
+        for(Role role : roles){
+            Set<Permission> permissions = role.getPermissions();
+            for(Permission permission : permissions){
+                //授权
+                list.add(new SimpleGrantedAuthority(permission.getKeyword()));
             }
         }
-
-            /**
-             * User()
-             * 1：指定用户名
-             * 2：指定密码（SpringSecurity会自动对密码进行校验）
-             * 3：传递授予的角色和权限
-             */
-            User userDetails = new User(username, user.getPassword(), list);
-            return userDetails;
-        }
+        /**
+         * User()
+         * 1：指定用户名
+         * 2：指定密码（SpringSecurity会自动对密码进行校验）
+         * 3：传递授予的角色和权限
+         */
+        UserDetails userDetails = new User(username,user.getPassword(),list);
+        return userDetails;
+    }
 }
