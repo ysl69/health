@@ -89,6 +89,16 @@ public class SetmealServiceImpl implements SetmealService{
 
 
     /**
+     * 套餐占比统计
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> findSetmealCount() {
+        return setmealDao.findSetmealCount();
+    }
+
+
+    /**
      * 将图片名称保存到Redis
      * @param img
      */

@@ -4,6 +4,7 @@ import com.itheima.health.entity.PageResult;
 import com.itheima.health.pojo.Setmeal;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author ysl
@@ -43,5 +44,12 @@ public interface SetmealService {
      * @return
      */
     Setmeal findById(int id);
+
+
+    /**
+     * 套餐占比统计
+     * @return
+     */
+    List<Map<String, Object>> findSetmealCount();
 
 }

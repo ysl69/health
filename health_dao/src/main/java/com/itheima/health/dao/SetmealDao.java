@@ -51,4 +51,12 @@ public interface SetmealDao {
      * @return
      */
     Setmeal findById(int id);
+
+
+    /**
+     * 套餐占比统计
+     * @return
+     */
+    List<Map<String, Object>> findSetmealCount();
+
 }
