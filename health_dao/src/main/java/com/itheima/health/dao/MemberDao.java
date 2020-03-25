@@ -34,4 +34,26 @@ public interface MemberDao {
      * @return
      */
     Integer findMemberCountBeforeDate(String m);
+
+    /**
+     * 今日新增会员数
+     * @param today
+     * @return
+     */
+    Integer findMemberCountByDate(String today);
+
+
+    /**
+     * 总会员数
+     * @return
+     */
+    Integer findMemberTotalCount();
+
+
+    /**
+     * 本周新增会员数
+     * @param thisWeekMonday
+     * @return
+     */
+    Integer findMemberCountAfterDate(String thisWeekMonday);
 }

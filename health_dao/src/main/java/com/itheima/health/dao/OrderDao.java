@@ -36,4 +36,42 @@ public interface OrderDao {
      * @return
      */
     Map findById4Detail(Integer id);
+
+
+    /**
+     * 今日预约数
+     * @param today
+     * @return
+     */
+    Integer findOrderCountByDate(String today);
+
+    /**
+     * 本周预约数
+     * @param weekMap
+     * @return
+     */
+    Integer findOrderCountBetweenDate(Map<String, Object> weekMap);
+
+
+    /**
+     * 今日到诊数
+     * @param today
+     * @return
+     */
+    Integer findVisitsCountByDate(String today);
+
+
+    /**
+     * 本周到诊数
+     * @param thisWeekMonday
+     * @return
+     */
+    Integer findVisitsCountAfterDate(String thisWeekMonday);
+
+
+    /**
+     * 热门套餐（取前4）
+     * @return
+     */
+    List<Map> findHotSetmeal();
 }
