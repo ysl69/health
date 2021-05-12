@@ -40,7 +40,7 @@
         <mysql.version>5.1.32</mysql.version>
         <druid.version>1.0.9</druid.version>
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
-        <spring.security.version>5.0.5.RELEASE</spring.security.version>
+        <spring.security.version>5.2.10.RELEASE</spring.security.version>
         <poi.version>3.14</poi.version>
         <jedis.version>2.9.0</jedis.version>
         <quartz.version>2.2.1</quartz.version>
